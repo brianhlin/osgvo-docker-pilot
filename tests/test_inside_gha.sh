@@ -121,7 +121,7 @@ function test_singularity_bindmount_HAS_SINGULARITY {
                                                 -B /cvmfs \
                                                 -cip \
                                                 --scratch /pilot \
-                                                docker://$CONTAINER_IMAGE \
+                                                docker-archive:///tmp/osgvo-docker-pilot.tar \
                                                 /usr/sbin/osgvo-node-advertise)
     test_HAS_SINGULARITY <<< "$out"
 }
@@ -135,7 +135,7 @@ function test_singularity_cvmfsexec_HAS_SINGULARITY {
                                     singularity run \
                                                 --scratch /pilot \
                                                 -cip \
-                                                docker://$CONTAINER_IMAGE \
+                                                docker-archive:///tmp/osgvo-docker-pilot.tar \
                                                 /usr/sbin/osgvo-node-advertise)
     test_HAS_SINGULARITY <<< "$out"
 }
@@ -155,7 +155,13 @@ if [[ $CVMFS_INSTALL == 'bindmount' ]]; then
     install_cvmfs
     start_cvmfs
 fi
-[[ $CONTAINER_RUNTIME == 'singularity' ]] && install_singularity
+
+if [[ $CONTAINER_RUNTIME == 'singularity' ]]; then
+    tempfile=$(mktemp)
+    docker save $CONTAINER_IMAGE -o $tempfile
+    TEST_CONTAINER_EXTRA_ARGS+=("-v $tempfile:/tmp/osgvo-docker-pilot.tar")
+    install_singularity
+fi
 
 EXIT_CODE=0
 
