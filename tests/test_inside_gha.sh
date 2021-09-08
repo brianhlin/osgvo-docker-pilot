@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-CONTAINER_IMAGE='osgvo-docker-pilot:latest'
+CONTAINER_IMAGE='opensciencegrid/osgvo-docker-pilot:release'
 OSP_TOKEN_PATH=/tmp/token
 COMMON_DOCKER_ARGS="run --user osg
                         --detach
