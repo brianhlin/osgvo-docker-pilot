@@ -155,6 +155,7 @@ function test_singularity_HAS_SINGULARITY {
     print_test_header "Testing singularity detection inside the backfill container"
 
     logdir=$(run_inside_singularity_backfill find /pilot -type d -name log)
+    run_inside_singularity_backfill ls -lR /pilot
     startd_addr=$(run_inside_singularity_backfill condor_who -log $logdir -dae | awk '/^Startd/ {print $6}')
     has_singularity=$(run_inside_singularity_backfill condor_status -direct $startd_addr -af HAS_SINGULARITY)
     if [[ $has_singularity == 'true' ]]; then
