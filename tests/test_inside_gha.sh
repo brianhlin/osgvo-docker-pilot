@@ -209,6 +209,7 @@ case "$CONTAINER_RUNTIME" in
         ;;
     singularity)
         tempfile=$(mktemp)
+        docker pull $CONTAINER_IMAGE
         docker save $CONTAINER_IMAGE -o $tempfile
         DOCKER_EXTRA_ARGS+=(-v "$tempfile:/tmp/osgvo-docker-pilot.tar")
         install_singularity "${DOCKER_EXTRA_ARGS[@]}"
