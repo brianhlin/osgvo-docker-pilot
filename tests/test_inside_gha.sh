@@ -41,6 +41,7 @@ function start_singularity_backfill {
                               -- \
                               singularity instance start \
                                           -B /cvmfs \
+                                          -B .:/pilot \
                                           -c \
                                           docker-archive:///tmp/osgvo-docker-pilot.tar \
                                           backfill
