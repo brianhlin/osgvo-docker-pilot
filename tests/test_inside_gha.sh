@@ -201,7 +201,14 @@ EXIT_CODE=0
 
 case "$CVMFS_INSTALL" in
     bindmount)
-        DOCKER_EXTRA_ARGS=(-v "/cvmfs:/cvmfs:shared")
+        DOCKER_EXTRA_ARGS=(--cap-add DAC_OVERRIDE
+                           --cap-add DAC_READ_SEARCH
+                           --cap-add SETUID
+                           --cap-add SETGID
+                           --cap-add SYS_ADMIN
+                           --cap-add SYS_CHROOT
+                           --cap-add SYS_PTRACE
+                           -v "/cvmfs:/cvmfs:shared")
         install_cvmfs
         start_cvmfs
         ;;
