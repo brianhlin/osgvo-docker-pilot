@@ -169,7 +169,7 @@ case "$CVMFS_INSTALL" in
         DOCKER_EXTRA_ARGS=(--security-opt seccomp=unconfined
                            --security-opt systempaths=unconfined
                            --security-opt no-new-privileges
-                           -v "/cvmfs:/cvmfs:shared")
+                           -v "/cvmfs:/cvmfs:slave")
         install_cvmfs
         start_cvmfs
         ;;
